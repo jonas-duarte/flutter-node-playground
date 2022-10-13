@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_parent/application/app_websocket_server.dart';
+import 'package:flutter_parent/application/ws_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -13,9 +15,11 @@ class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    WsProvider.ws.sendMessage(AppWebSocketMessage(
+      type: AppWebSocketMessageType.counterChanged,
+      content: '${_counter++}',
+    ));
+    setState(() {});
   }
 
   @override
